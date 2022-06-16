@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/JasonSatherr/Ding-Team-Alarm/tree/main/Client/src/timeTools"
 )
 
 func main() {
-	fmt.Println(timeTools.printCurrentTime())
+	timeTools.PrintCurrentTime()
 }
