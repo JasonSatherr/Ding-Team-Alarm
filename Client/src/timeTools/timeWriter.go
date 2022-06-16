@@ -1,3 +1,4 @@
+//package timeTools attempts to provide
 package timeTools
 
 import (
@@ -5,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/JasonSatherr/Ding-Team-Alarm/tree/main/Client/src/convenience"
 )
 
 func PrintCurrentTime() {
@@ -23,14 +26,12 @@ func getPathToStorage() string {
 	return pathToOpen
 }
 
-func writeTimeToStorage(filePath string, timeToRecord time.Time) {
+func WriteTimeToStorage(filePath string, timeToRecord time.Time) {
 
 	//first open the file
 	//file, err := os.Open(filePath)
 	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0755)
-	if err != nil {
-		panic(err)
-	}
+	convenience.HandlePotErr(err)
 	defer file.Close()
 	//then get the csv writer into a var csvWriter
 	csvWriter := csv.NewWriter(file) //file implements the io.writer interface
@@ -47,22 +48,18 @@ func writeTimeToStorage(filePath string, timeToRecord time.Time) {
 	}
 	csvWriter.Flush()
 	err = csvWriter.Error()
-	if err != nil {
-		panic(err)
-	}
+	convenience.HandlePotErr(err)
 }
 
 func WriteCurrentTimeToFile() {
 	filePath := getPathToStorage()
-	writeTimeToStorage(filePath, time.Now())
+	WriteTimeToStorage(filePath, time.Now())
 }
 
 func WriteToHi() {
 	//first open the file
 	file, err := os.Create("src\\data\\hi.txt")
-	if err != nil {
-		panic(err)
-	}
+	convenience.HandlePotErr(err)
 	defer file.Close()
 	//then get the csv writer into a var csvWriter
 	var message []byte
