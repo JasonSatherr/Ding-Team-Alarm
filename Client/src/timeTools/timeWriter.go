@@ -55,14 +55,3 @@ func WriteCurrentTimeToFile() {
 	filePath := getPathToStorage()
 	WriteTimeToStorage(filePath, time.Now())
 }
-
-func WriteToHi() {
-	//first open the file
-	file, err := os.Create("src\\data\\hi.txt")
-	convenience.HandlePotErr(err)
-	defer file.Close()
-	//then get the csv writer into a var csvWriter
-	var message []byte
-	message = append(message, 77, 78)
-	file.Write(message)
-}
