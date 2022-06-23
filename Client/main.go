@@ -8,5 +8,5 @@ func main() {
 
 	timeTools.PrintCurrentTime()
 	timeTools.WriteCurrentTimeToFile()
-	timeTools.WriteToHi()
+	//timeTools.WriteToHi()
 }
