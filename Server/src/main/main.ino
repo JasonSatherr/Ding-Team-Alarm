@@ -21,17 +21,59 @@
 
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
 */
+#include <ESP8266WiFi.h>
+#include <ArduinoWiFiServer.h>
+#include "config/arduino_secrets.h"
+#include "DataTool.h"
+
+char ssid[] = SECRET_SSID;
+char pass[] = SECRET_PASS;
+
+WiFiServer server(80);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+  Serial.setDebugOutput(true);    //enable the debugging
+  //setup the wifi
+  WiFi.begin(ssid, pass);
+  Serial.print("Connecting");
+  while (WiFi.status() != WL_CONNECTED) //wait til connected
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
+  server.begin()
 }
+
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);                       // wait for a second
+    // listen for incoming clients
+  WiFiClient client = server.available();
+  if (client) {
+
+    if (client.connected()) {
+      Serial.println("Connected to client");
+
+      
+    }
+
+    // close the connection:
+    client.stop();
+  }  
+  delay(5000);                       // wait for 5 seconds before we accept another connection...
+  //idk much about networking, but we should try to prevent large requests many many times
+}
+
+void gatherData(){
+
+
+}
 }
