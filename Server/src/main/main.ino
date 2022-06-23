@@ -37,6 +37,9 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
   Serial.setDebugOutput(true);    //enable the debugging
+
+  //setup the hostname
+  WiFi.hostname("DoorSensor");
   //setup the wifi
   WiFi.begin(ssid, pass);
   Serial.print("Connecting");
@@ -58,11 +61,12 @@ void loop() {
     // listen for incoming clients
   WiFiClient client = server.available();
   if (client) {
-
+    Serial.println("We got a client, wow!");
     if (client.connected()) {
       Serial.println("Connected to client");
-
-      
+      String * clientData = DataTool.getDataFromClient(client);
+      Serial.println("The client wants to tell the server");
+      Serial.println(*clientData);
     }
 
     // close the connection:
@@ -70,10 +74,4 @@ void loop() {
   }  
   delay(5000);                       // wait for 5 seconds before we accept another connection...
   //idk much about networking, but we should try to prevent large requests many many times
-}
-
-void gatherData(){
-
-
-}
 }

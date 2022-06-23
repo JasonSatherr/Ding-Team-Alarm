@@ -14,7 +14,7 @@ static * DataTool::getDataFromClient(client c) {
     dataString += nextChar; //append the next char
     nextChar = c.read();    //read the next char from the client
   }
-  
+  return &dataString;
 }
 /*
 void LED::turnOFF() {
