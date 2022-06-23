@@ -1,2 +1,3 @@
 *.exe
 arduino_secrets.h
+secrets.json
